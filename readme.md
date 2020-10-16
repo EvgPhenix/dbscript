@@ -24,12 +24,13 @@
 После скачивания xml из open.ru все сущности выглядят как указано выше
 
 Скрипт меняет формат данных следующим образом:
- lang="ru" на ""
+```
+ lang="ru" = ""
 <feature-boolean name="public" value="1"/> = <feature-boolean_public>1</feature-boolean_public>
 <feature-boolean name="public" value="0"/> = <feature-boolean_public>0</feature-boolean_public>
 <feature-boolean name="cash_in" value="1"/> = <feature-boolean_cash>1</feature-boolean_cash>
 <feature-boolean name="cash_in" value="0"/> = <feature-boolean_cash>0</feature-boolean_cash>
-
+```
 далее пишет каждую сущность в виде запроса insert в выходной файл
 
 для запуска необходимо скачать репозиторий, зайти в него из командной строки и ввести
