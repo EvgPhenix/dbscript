@@ -31,3 +31,11 @@
 <feature-boolean name="cash_in" value="0"/> = <feature-boolean_cash>0</feature-boolean_cash>
 
 далее пишет каждую сущность в виде запроса insert в выходной файл
+
+для запуска необходимо скачать репозиторий, зайти в него из командной строки и ввести
+./gradlew build
+перейти в папку libs
+cd build/libs/
+запустить jar-ник
+java -jar db-0.0.1-SNAPSHOT.jar [вместо этих скобок имя  cкачанного xml] [вместо этих имя выходного файла типа output.sql]
+получившийся sql наполнит базу данными
