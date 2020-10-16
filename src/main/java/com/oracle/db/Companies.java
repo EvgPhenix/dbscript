@@ -91,9 +91,9 @@ class Companies implements Serializable {
         }
     }
 
-    public static void main(String[] args) throws IOException {
+    public void getScript(String inputFileName, String outputFileName) throws IOException {
 
-        File file = new File(args[0]);
+        File file = new File(inputFileName);
         String content = new String(Files.readAllBytes(file.toPath()));
 
         System.out.println(content);
@@ -109,14 +109,10 @@ class Companies implements Serializable {
         System.out.println(value.companies.size());
 
         // Сделаем sql-ник
-
-        String template = "insert into go_geo_obj_atm_partner(country, company_id, address, url, latitude, longtitude, actualization_date, feature_public, feature_cash_in, name, working_time, rubric_id)\n" +
-                "values ('','','','','','','','','','','','');";
-
         List<Company> list = value.companies;
         String fileName;
         try {
-            fileName = args[1] == null ? "output.txt" : args[1];
+            fileName = outputFileName == null ? "output.txt" : outputFileName;
         } catch (ArrayIndexOutOfBoundsException e) {
             fileName = "output.txt";
         }
