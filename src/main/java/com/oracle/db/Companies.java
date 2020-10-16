@@ -11,33 +11,6 @@ import java.io.*;
 import java.nio.file.Files;
 import java.util.List;
 
-/*
-        <country lang="ru">Россия</country>
-        <company-id>gazprombank_445774</company-id>
-        <address lang="ru">Астраханская область, Астрахань, ул. Адмирала Нахимова 60В, ГК "Золотой Затон"</address>
-        <url>https://www.open.ru</url>
-        <coordinates>
-            <lat>46.30717</lat>
-            <lon>47.98729</lon>
-        </coordinates>
-        <actualization-date>21.07.2020</actualization-date>
-        <feature-boolean name="public" value="1"/>
-        <feature-boolean name="cash_in" value="0"/>
-        <name lang="ru">Банкомат Газпромбанк</name>
-        <working-time>Круглосуточно</working-time>
-        <rubric-id>184105402</rubric-id>
-
-После скачивания xml из open.ru все сущности выглядят как указано выше
-Необходимо изменить формат данных (ctrl+R) следующим образом:
- lang="ru" на ""
-<feature-boolean name="public" value="1"/> = <feature-boolean_public>1</feature-boolean_public>
-<feature-boolean name="public" value="0"/> = <feature-boolean_public>0</feature-boolean_public>
-<feature-boolean name="cash_in" value="1"/> = <feature-boolean_cash>1</feature-boolean_cash>
-<feature-boolean name="cash_in" value="0"/> = <feature-boolean_cash>0</feature-boolean_cash>
-
-скрипт это делает и пишет каждую сущность в виде запроса insert в выходной файл
- */
-
 
 @JacksonXmlRootElement(localName = "companies")
 class Companies implements Serializable {
@@ -49,14 +22,14 @@ class Companies implements Serializable {
 
     @Override
     public String toString() {
-        return "CompaniesA{" +
+        return "Companies{" +
                 "companies=" + companies +
                 '}';
     }
 
-    static class Company{
+    static class Company {
 
-    public String country;
+        public String country;
         @JsonProperty("company-id")
         public String company_id;
         public String address;
@@ -96,7 +69,7 @@ class Companies implements Serializable {
                     '}';
         }
 
-        public static class Coordinates{
+        public static class Coordinates {
             public String lat;
             public String lon;
 
@@ -119,72 +92,24 @@ class Companies implements Serializable {
     }
 
     public static void main(String[] args) throws IOException {
-//    String xml = "<company>\n" +
-//            "        <country lang=\"ru\">Россия</country>\n" +
-//            "        <company-id>gazprombank_461758</company-id>\n" +
-//            "        <address lang=\"ru\">Астраханская область, Астрахань, ул. Кирова 7, ТЦ \"ЦУМ\"</address>\n" +
-//            "        <url>https://www.open.ru</url>\n" +
-//            "        <coordinates>\n" +
-//            "            <lat>46.35266</lat>\n" +
-//            "            <lon>48.03828</lon>\n" +
-//            "        </coordinates>\n" +
-//            "        <actualization-date>21.07.2020</actualization-date>\n" +
-//            "        <feature-boolean name=\"public\" value=\"1\"/>\n" +
-//            "        <feature-boolean name=\"cash_in\" value=\"0\"/>\n" +
-//            "        <name lang=\"ru\">Банкомат Газпромбанк</name>\n" +
-//            "        <working-time>ежедневно 9:00-19:00</working-time>\n" +
-//            "        <rubric-id>184105402</rubric-id>\n" +
-//            "    </company>";
 
-    String xml = "<companies>\n" +
-            "    <company>\n" +
-            "        <country>Россия</country>\n" +
-            "        <company-id>gazprombank_461758</company-id>\n" +
-            "        <address>Астраханская область, Астрахань, ул. Кирова 7, ТЦ \"ЦУМ\"</address>\n" +
-            "        <url>https://www.open.ru</url>\n" +
-            "        <coordinates>\n" +
-            "            <lat>46.35266</lat>\n" +
-            "            <lon>48.03828</lon>\n" +
-            "        </coordinates>\n" +
-            "        <actualization-date>21.07.2020</actualization-date>\n" +
-            "        <name>Банкомат Газпромбанк</name>\n" +
-            "        <working-time>ежедневно 9:00-19:00</working-time>\n" +
-            "        <rubric-id>184105402</rubric-id>\n" +
-            "    </company>\n" +
-            "    <company>\n" +
-            "        <country>Россия</country>\n" +
-            "        <company-id>gazprombank_445774</company-id>\n" +
-            "        <address>Астраханская область, Астрахань, ул. Адмирала Нахимова 60В, ГК \"Золотой Затон\"</address>\n" +
-            "        <url>https://www.open.ru</url>\n" +
-            "        <coordinates>\n" +
-            "            <lat>46.30717</lat>\n" +
-            "            <lon>47.98729</lon>\n" +
-            "        </coordinates>\n" +
-            "        <actualization-date>21.07.2020</actualization-date>\n" +
-            "        <name>Банкомат Газпромбанк</name>\n" +
-            "        <working-time>Круглосуточно</working-time>\n" +
-            "        <rubric-id>184105402</rubric-id>\n" +
-            "    </company>\n" +
-            "</companies>";
-    File file = new File(args[0]);
-    String content = new String(Files.readAllBytes(file.toPath()));
+        File file = new File(args[0]);
+        String content = new String(Files.readAllBytes(file.toPath()));
 
-    System.out.println(content);
-    String newContent = content
-            .replaceAll(" lang=\"ru\"", "")
-            .replaceAll("<feature-boolean name=\"public\" value=\"1\"/>", "<feature-boolean_public>1</feature-boolean_public>")
-            .replaceAll("<feature-boolean name=\"public\" value=\"0\"/>", "<feature-boolean_public>0</feature-boolean_public>")
-            .replaceAll("<feature-boolean name=\"cash_in\" value=\"1\"/>", "<feature-boolean_cash>1</feature-boolean_cash>")
-            .replaceAll("<feature-boolean name=\"cash_in\" value=\"0\"/>", "<feature-boolean_cash>0</feature-boolean_cash>")
-            .replaceAll("'", " ");
-    XmlMapper mapper = new XmlMapper();
-    Companies value = mapper.readValue(newContent, Companies.class);
-    System.out.println(value.companies.size());
+        System.out.println(content);
+        String newContent = content
+                .replaceAll(" lang=\"ru\"", "")
+                .replaceAll("<feature-boolean name=\"public\" value=\"1\"/>", "<feature-boolean_public>1</feature-boolean_public>")
+                .replaceAll("<feature-boolean name=\"public\" value=\"0\"/>", "<feature-boolean_public>0</feature-boolean_public>")
+                .replaceAll("<feature-boolean name=\"cash_in\" value=\"1\"/>", "<feature-boolean_cash>1</feature-boolean_cash>")
+                .replaceAll("<feature-boolean name=\"cash_in\" value=\"0\"/>", "<feature-boolean_cash>0</feature-boolean_cash>")
+                .replaceAll("'", " ");
+        XmlMapper mapper = new XmlMapper();
+        Companies value = mapper.readValue(newContent, Companies.class);
+        System.out.println(value.companies.size());
 
-        /*
-        Сделаем sql-ник
+        // Сделаем sql-ник
 
-         */
         String template = "insert into go_geo_obj_atm_partner(country, company_id, address, url, latitude, longtitude, actualization_date, feature_public, feature_cash_in, name, working_time, rubric_id)\n" +
                 "values ('','','','','','','','','','','','');";
 
@@ -218,13 +143,12 @@ class Companies implements Serializable {
                     company.working_time,
                     company.rubric_id);
 
-
             writer.write(output);
             if (i % 800 == 0) {
                 writer.write("commit;\n");
             }
         }
         writer.close();
-}
+    }
 }
 
