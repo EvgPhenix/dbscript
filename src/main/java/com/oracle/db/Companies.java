@@ -166,8 +166,7 @@ class Companies implements Serializable {
             "        <rubric-id>184105402</rubric-id>\n" +
             "    </company>\n" +
             "</companies>";
-//    File file = ResourceUtils.getFile("/Users/ar11/Downloads/db/src/main/resources/partnerX.xml");
-    File file = new File("/Users/ar11/Downloads/dbx/partnerInitial.xml");
+    File file = new File(args[0]);
     String content = new String(Files.readAllBytes(file.toPath()));
 
     System.out.println(content);
@@ -190,8 +189,14 @@ class Companies implements Serializable {
                 "values ('','','','','','','','','','','','');";
 
         List<Company> list = value.companies;
-
-        FileWriter writer = new FileWriter(args[1] == null ? "output.txt" : args[1]);
+        String fileName;
+        try {
+            fileName = args[1] == null ? "output.txt" : args[1];
+        } catch (ArrayIndexOutOfBoundsException e) {
+            fileName = "output.txt";
+        }
+        System.out.println("fileName : " + fileName);
+        FileWriter writer = new FileWriter(fileName);
         for (int i = 0; i < list.size(); i++) {
             Company company = list.get(i);
             String COUNTRY = company.country;
